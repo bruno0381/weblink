@@ -153,6 +153,7 @@ export function Admin(){
 
           {links.map( (link) => (
               <article
+              key={link.id}
               className='flex items-center justify-between w-11/12 max-w-xl rounded py-3 px-2 mb-2 selection:none'
               style={{ backgroundColor: link.bg, color: link.color  }}
             >

@@ -1,6 +1,7 @@
+import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from 'react'
 import { Social } from '../../components/social'
-import { FaInstagram, FaLinkedin } from 'react-icons/fa'
+import { FaInstagram, FaLinkedin, FaGithub } from 'react-icons/fa'
 
 import { db } from '../../services/firebaseConnection'
 import { getDocs, collection, orderBy, query, doc, getDoc } from 'firebase/firestore'
@@ -17,11 +18,18 @@ import { getDocs, collection, orderBy, query, doc, getDoc } from 'firebase/fires
 interface SocialLinksProps{
     linkedin: string
     instagram: string
+    github: string
 }
 
 export function Home(){
   const [links, setLinks] = useState<LinkProps[]>([])
   const [socialLinks, setSocialLinks] = useState<SocialLinksProps>()
+
+  const navigate = useNavigate()
+
+  const irParaLogin = () => {
+    navigate("/login");
+  };
 
 // userEfecct para buscar os links no banco de dados//
  useEffect(() => {
@@ -59,7 +67,8 @@ export function Home(){
          if(snapshot.data() !== undefined){
           setSocialLinks({
             linkedin: snapshot.data()?.linkedin,
-            instagram: snapshot.data()?.instagram
+            instagram: snapshot.data()?.instagram,
+            github: snapshot.data()?.github
           })
          }
       })
@@ -99,8 +108,24 @@ export function Home(){
                      <Social url="https://www.instagram.com/brunodevworks/">
                       <FaInstagram size={35} color="#fff"/>
                    </Social>
-                </footer>
+                   <Social url="https://github.com/bruno0381">
+                      <FaGithub size={35} color="#fff"/>
+                   </Social>
+                
+                 </footer>
+
             )}
+              
+               <div>
+               <button
+                      onClick={irParaLogin}
+                      className="w-fit px-5 py-2 bg-white text-gray-900 rounded-lg hover:bg-blue-700 max-w-xl"
+                       >
+                      Ir para Login
+                   </button>
+                </div>   
+
+
             </main>
         </div>
     )

@@ -7,8 +7,9 @@ import {setDoc, doc, getDoc } from 'firebase/firestore'
 
 export function Networks(){
  //Criar UseState para pegar info do Input//
- const [facebook, setFacebook] = useState("")
+ const [linkedin, setLinkedin] = useState("")
  const [instagram, setInstagram] = useState("")
+ const [github, setGitHub] = useState("")
 
  //useEffect para carregar os links quando abrir a pagina social//
  useEffect(()=>{
@@ -17,8 +18,9 @@ export function Networks(){
      getDoc(docRef)
      .then((snapshot) => {
         if(snapshot.data() !== undefined){
-            setFacebook(snapshot.data()?.facebook)
+            setLinkedin(snapshot.data()?.linkedin)
             setInstagram(snapshot.data()?.instagram)
+            setGitHub(snapshot.data()?.github)
         }
      })
    }
@@ -30,8 +32,9 @@ export function Networks(){
     e.preventDefault()
 
     setDoc(doc(db, "social", "link"), {
-        facebook: facebook,
-        instagram: instagram
+        linkedin: linkedin,
+        instagram: instagram,
+        github: github,
     })
     .then(() => {
         console.log("Cadastrados com sucesso")
@@ -41,8 +44,9 @@ export function Networks(){
 
     })
 
-    setFacebook("")
+    setLinkedin("")
     setInstagram("")
+    setGitHub("")
  }
 
     return(
@@ -52,12 +56,12 @@ export function Networks(){
             <h1 className="text-white text-2xl font-medium mt-8 mb-4">Minhas redes sociais</h1>
 
             <form className="flex flex-col max-w-xl w-full" onSubmit={handleRegister}>
-                <label className="text-white font-medium mt-2 mb-2">Link do Facebook</label>
+                <label className="text-white font-medium mt-2 mb-2">Link do Linkedin</label>
                 <Input
                 type="url"
-                placeholder="Digite a url do facebook..."
-                value={facebook}
-                onChange={(e) => setFacebook(e.target.value)}
+                placeholder="Digite a url do linkedin..."
+                value={linkedin}
+                onChange={(e) => setLinkedin(e.target.value)}
                 />
 
                 <label className="text-white font-medium mt-2 mb-2">Link do Instagram</label>
@@ -67,11 +71,19 @@ export function Networks(){
                 value={instagram}
                 onChange={(e) => setInstagram(e.target.value)}
                 />
+                <label className="text-white font-medium mt-2 mb-2">Link do GitHub</label>
+                <Input
+                type="url"
+                placeholder="Digite a url do Github"
+                value={github}
+                onChange={(e) => setGitHub(e.target.value)}
+                />
 
                 <button
                 type="submit"
                 className="text-white bg-gray-700 h-9 rounded-md items-center justify-center flex mb-7 font-medium"
-                >Salvar links
+                >
+                    Salvar links
                 </button>
             </form>
         </div>
